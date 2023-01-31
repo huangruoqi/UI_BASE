@@ -3,18 +3,18 @@ from pygame.locals import *  # noqa
 from .utils import Mouse
 from .components.background import Background
 from .components.container import Container
+from .components.button import Button
 from .utils import IMAGE
 
 
 class Scene:
     def __init__(
-        self, screen, bg_file="white.png", width=None, height=None
+        self, screen, width, height, bg_file="white.png"
     ):
         bg = IMAGE(bg_file)
-        if (width is None) or (height is None):
-            self.background = Background(bg)
-        else:
-            self.background = Background(bg, width, height)
+        self.width = width
+        self.height = height
+        self.background = Background(bg, width, height)
         self.background_music = None
         self.screen = screen
         self.is_pointer = False
@@ -59,4 +59,7 @@ class Scene:
     def add(self, key, value, layer_number = 0):
         if not isinstance(value, Container):
             raise Exception("Not a component")
-        self.LAYERS[layer_number][key] = value
+        if isinstance(value, Button):
+            self.BUTTONS[key] = value
+        else: 
+            self.LAYERS[layer_number][key] = value

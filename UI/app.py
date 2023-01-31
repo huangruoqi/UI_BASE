@@ -8,11 +8,11 @@ class App:
         pygame.init()
         GAME_RESOLUTION = (width, height)
         screen = pygame.display.set_mode(GAME_RESOLUTION)
-        Icon = IMAGE("icon.png")
+        self.scene = scene_class(screen, width, height)
         pygame.display.set_caption("Title")
-        pygame.display.set_icon(Icon)
+        # Icon = IMAGE("icon.png") # add your own icon image
+        # pygame.display.set_icon(Icon)
         pygame.mouse.set_visible(False)
-        self.scene = scene_class(screen)
         self.scene.load_items()
 
     def display(self, mouse_pos, clicked):

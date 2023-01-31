@@ -1,9 +1,8 @@
 from .container import Container
-from setting import WIDTH, HEIGHT
 
 
 class Background(Container):
-    def __init__(self, image, width=WIDTH, height=HEIGHT):
+    def __init__(self, image, width, height):
         super().__init__(image=image, width=width, height=height)
 
     def draw(self, screen):
