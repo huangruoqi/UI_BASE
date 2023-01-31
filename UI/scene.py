@@ -63,3 +63,9 @@ class Scene:
             self.BUTTONS[key] = value
         else: 
             self.LAYERS[layer_number][key] = value
+
+    def get(self, key):
+        for layer in self.LAYERS:
+            item = layer.get(key)
+            if item is not None:
+                return item
