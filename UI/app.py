@@ -13,7 +13,6 @@ class App:
         # Icon = IMAGE("icon.png") # add your own icon image
         # pygame.display.set_icon(Icon)
         pygame.mouse.set_visible(False)
-        self.scene.load_items()
 
     def display(self, mouse_pos, clicked):
         self.scene.display(mouse_pos, clicked)

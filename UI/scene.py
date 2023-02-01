@@ -51,18 +51,17 @@ class Scene:
         for other in others:
             other.update(mouse_pos, clicked, pressed)
 
-    def load_items(self):
-        for i in range(self.layer_number):
-            self.GROUPS[i].empty()
-            self.GROUPS[i].add(list(self.LAYERS[i].values()))
 
     def add(self, key, value, layer_number = 0):
         if not isinstance(value, Container):
             raise Exception("Not a component")
         if isinstance(value, Button):
             self.BUTTONS[key] = value
+            self.GROUPS[1].add(value)
         else: 
             self.LAYERS[layer_number][key] = value
+            self.GROUPS[layer_number].add(value)
+
 
     def get(self, key):
         for layer in self.LAYERS:
