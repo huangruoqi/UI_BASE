@@ -4,27 +4,28 @@ import os
 import json
 from .sound import Sound
 
+BASE = os.path.dirname(__file__)
+print(BASE)
+
 def IMAGE(name, relative=True):
     return pygame.image.load(
-        (os.path.join("assets/images/", name) if relative else name)
+        (os.path.join(BASE, "assets/images/", name) if relative else name)
     )
 
 
 def SOUND(name, channel):
-    return Sound(os.path.join("assets/sounds/", name), channel)
+    return Sound(os.path.join(BASE, "assets/sounds/", name), channel)
+
+def FONT(name, size):
+    return pygame.font.Font(os.path.join(BASE, "assets/fonts/", name), size)
 
 
 def JSON(name, relative=True):
     with open(
-        os.path.join("assets/data/", name) if relative else name,
+        os.path.join(BASE, "assets/data/", name) if relative else name,
         encoding="utf8",
     ) as f:
         return json.load(f)
-
-def save_file(pathname, content):
-    f = open(os.path.join(pathname), "w", encoding="utf8")
-    f.write(content)
-    f.close()
 
 class vec(list):
     def __init__(self, x, y=0):

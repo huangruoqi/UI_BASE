@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *  # noqa
 from .container import Container
+from ..utils import FONT
 
 pygame.font.init()
 
@@ -9,7 +10,7 @@ DEFAULT_SIZE = 32
 
 class Text(Container):
     fontsizes = {}
-    pygame.font.Font("assets/fonts/chinese.ttf", DEFAULT_SIZE)
+    FONT("chinese.ttf", DEFAULT_SIZE)
 
     def __init__(
         self,
@@ -55,5 +56,5 @@ class Text(Container):
     def get_font(size):
         return __class__.fontsizes.get(
             size,
-            pygame.font.Font("assets/fonts/chinese.ttf", size),
+            FONT("chinese.ttf", size),
         )
