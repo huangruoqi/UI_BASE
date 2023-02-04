@@ -23,7 +23,7 @@ class Slider(Button):
                 val = ((self.get_pos().x - self.origin.x) + 50) / 100 * (
                     self.interval[1] - self.interval[0]
                 ) + self.interval[0]
-                self.on_change(int(val))
+                self.on_change(val)
             self.dragged = pressed
         else:
             self.dragged = pressed and self.check_collide(mouse_pos)
