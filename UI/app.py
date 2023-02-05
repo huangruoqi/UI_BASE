@@ -28,7 +28,8 @@ class App:
         pressing = False
         delta_time = 0.016
         running = True
-        self.scene.background_music.play()
+        if self.scene.background_music is not None:
+            self.scene.background_music.play()
 
         # app settings
         while running:
