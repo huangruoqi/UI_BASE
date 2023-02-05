@@ -1,4 +1,4 @@
-from pixel_display import PixelDisplay
+from .pixel_display import PixelDisplay
 import numpy
 
 class ColorBar(PixelDisplay):

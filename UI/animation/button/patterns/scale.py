@@ -1,4 +1,4 @@
-from UI.components.text import Text
+from ....components.text import Text
 from ...mixin import Mixin
 import pygame
 from pygame.locals import *  # noqa
