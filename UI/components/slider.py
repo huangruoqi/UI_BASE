@@ -5,32 +5,36 @@ from .button import Button
 
 
 class Slider(Button):
-    def __init__(self, on_change, interval=[0, 31], *args, **kwargs):
-        kwargs["image"] = pygame.Surface([30, 30])
-        kwargs["image"].fill((0, 0, 0))
-        super().__init__(*args, **kwargs)
+    def __init__(self, drag_width, on_change, width=30, height=30, interval=[0, 31],color=(0,0,0), on_click=lambda:0, *args, **kwargs):
+        kwargs["image"] = pygame.Surface([width, height])
+        kwargs["image"].fill(color)
+        super().__init__(on_click=on_click, *args, **kwargs)
         self.dragged = False
         self.origin = self.get_pos()
-        self.set_pos(self.origin.x - 50, self.origin.y)
+        self.half_width = drag_width // 2
+        self.set_pos(self.origin.x - self.half_width, self.origin.y)
         self.on_change = on_change
         self.offset = 0
         self.interval = interval
+        self.sound = None
 
     def update(self, mouse_pos, clicked, pressed):
         super().update(mouse_pos, clicked, pressed)
         if self.dragged:
-            if not pressed:
-                val = ((self.get_pos().x - self.origin.x) + 50) / 100 * (
-                    self.interval[1] - self.interval[0]
-                ) + self.interval[0]
-                self.on_change(val)
+            val = ((self.get_pos().x - self.origin.x) + self.half_width) / self.half_width / 2 * (
+                self.interval[1] - self.interval[0]
+            ) + self.interval[0]
+            self.on_change(val)
             self.dragged = pressed
         else:
             self.dragged = pressed and self.check_collide(mouse_pos)
             self.offset = mouse_pos - self.get_pos()
 
         if self.dragged:
-            x_pos = min(
-                max(self.origin.x - 50, mouse_pos.x - self.offset.x), self.origin.x + 50
-            )
-            self.set_pos(x_pos, self.origin.y)
+            self.set_slider_pos(mouse_pos.x - self.offset.x)
+
+    def set_slider_pos(self, pos):
+        x_pos = min(
+            max(self.origin.x - self.half_width, pos), self.origin.x + self.half_width
+        )
+        self.set_pos(x_pos, self.origin.y)
