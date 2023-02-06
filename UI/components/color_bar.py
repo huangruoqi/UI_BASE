@@ -17,11 +17,18 @@ class ColorBar(PixelDisplay):
         if width % 100 != 0:
             raise Exception("<width> for ColorBar must be multiples of 100")
         super(ColorBar, self).__init__(width, height, x, y)
-        self.color_buffer = numpy.array([self.colors['black'] for i in range(100)])
+        self.color_buffer = numpy.array([self.colors['black'] for i in range(100)], dtype='u8')
+        self.m = width
         self.n = height
+        self.k = self.m // 100
 
     def set_color(self, i, color):
         self.color_buffer[i] = self.colors[color]
-        np_arr = numpy.array([self.color_buffer for i in range(self.n)])
-        self.set(np_arr)
+        self.process()
 
+    def process(self):
+        np_arr = numpy.zeros((self.m, self.n, 3), dtype='u8')
+        for i in range(self.k):
+            for j in range(self.n):
+                np_arr[i:self.m:self.k, j] = self.color_buffer
+        self.set(np_arr)

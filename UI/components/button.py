@@ -29,9 +29,9 @@ class Button(Container):
 
     def __init__(
         self,
-        animation="scale",
+        animation="opacity",
         transition=0.2,
-        parameter={"factor": 1.2},
+        parameter={"factor": 0.5},
         on_click=None,
         can_hover=None,
         text=None,
