@@ -45,4 +45,4 @@ class ColorBar(PixelDisplay):
             return
         if self.check_collide(mouse_pos):
             if clicked and self.on_click:
-                self.on_click(mouse_pos)
+                self.on_click((mouse_pos.x - self.get_pos().x + self.m/2)/ self.m)
