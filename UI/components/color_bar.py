@@ -4,7 +4,6 @@ import numpy
 
 class ColorBar(PixelDisplay):
     colors = {
-        "black": (0, 0, 0),
         "red": (255, 100, 100),
         "green": (100, 255, 100),
         "blue": (100, 255, 255),
@@ -12,6 +11,7 @@ class ColorBar(PixelDisplay):
         "purple": (255, 100, 255),
         "tint": (100, 255, 255),
         "white": (255, 255, 255),
+        "black": (0, 0, 0),
     }
 
     def __init__(self, width, height, x, y, on_click=None):

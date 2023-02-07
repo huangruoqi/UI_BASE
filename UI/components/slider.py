@@ -19,7 +19,7 @@ class Slider(Button):
     ):
         kwargs["image"] = pygame.Surface([width, height])
         kwargs["image"].fill(color)
-        super().__init__(on_click=on_click, *args, **kwargs)
+        super().__init__(on_click=on_click,opacity=0.8, *args, **kwargs)
         self.dragged = False
         self.origin = self.get_pos()
         self.half_width = drag_width // 2
