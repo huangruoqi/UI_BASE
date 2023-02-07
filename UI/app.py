@@ -8,7 +8,7 @@ class App:
         pygame.init()
         GAME_RESOLUTION = (width, height)
         screen = pygame.display.set_mode(GAME_RESOLUTION)
-        self.scene = scene_class(screen, width, height)
+        self.scene = scene_class(screen, width, height, *args, **kwargs)
         pygame.display.set_caption("Title")
         # Icon = IMAGE("icon.png") # add your own icon image
         # pygame.display.set_icon(Icon)
