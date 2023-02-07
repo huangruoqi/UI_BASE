@@ -6,7 +6,7 @@ class ColorBar(PixelDisplay):
     colors = {
         "red": (255, 100, 100),
         "green": (100, 255, 100),
-        "blue": (100, 255, 255),
+        "blue": (100, 100, 255),
         "orange": (255, 255, 100),
         "purple": (255, 100, 255),
         "tint": (100, 255, 255),

@@ -5,7 +5,6 @@ import json
 from .sound import Sound
 
 BASE = os.path.dirname(__file__)
-print(BASE)
 
 
 def IMAGE(name, relative=True):
