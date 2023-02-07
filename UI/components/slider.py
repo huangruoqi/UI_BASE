@@ -21,10 +21,6 @@ class Slider(Button):
     def update(self, mouse_pos, clicked, pressed):
         super().update(mouse_pos, clicked, pressed)
         if self.dragged:
-            val = ((self.get_pos().x - self.origin.x) + self.half_width) / self.half_width / 2 * (
-                self.interval[1] - self.interval[0]
-            ) + self.interval[0]
-            self.on_change(val)
             self.dragged = pressed
         else:
             self.dragged = pressed and self.check_collide(mouse_pos)
@@ -34,11 +30,16 @@ class Slider(Button):
             self.set_slider_pos(mouse_pos.x - self.offset.x)
 
     def set_slider_pos(self, pos):
+        val = ((self.get_pos().x - self.origin.x) + self.half_width) / self.half_width / 2 * (
+            self.interval[1] - self.interval[0]
+        ) + self.interval[0]
+        self.on_change(val)
         x_pos = min(
             max(self.origin.x - self.half_width, pos), self.origin.x + self.half_width
         )
         self.set_pos(x_pos, self.origin.y)
 
     def set_progress(self, progress):
-        self.set_slider_pos(self.half_width * (0.5 - progress) + self.origin.x)
+        pos = self.half_width * 2 * progress + self.origin.x - self.half_width
+        self.set_slider_pos(pos)
 
