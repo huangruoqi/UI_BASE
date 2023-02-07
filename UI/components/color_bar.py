@@ -27,6 +27,8 @@ class ColorBar(PixelDisplay):
         self.on_click = on_click
 
     def set_color(self, i, color):
+        if self.color_buffer[i] == self.colors[color]:
+            return
         self.color_buffer[i] = self.colors[color]
         self.process()
 
