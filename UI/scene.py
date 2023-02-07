@@ -68,3 +68,6 @@ class Scene:
             item = layer.get(key)
             if item is not None:
                 return item
+
+    def close(self):
+        pass
