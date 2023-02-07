@@ -4,7 +4,7 @@ from .utils import vec, IMAGE
 
 
 class App:
-    def __init__(self, scene_class, width, height):
+    def __init__(self, scene_class, width, height, *args, **kwargs):
         pygame.init()
         GAME_RESOLUTION = (width, height)
         screen = pygame.display.set_mode(GAME_RESOLUTION)

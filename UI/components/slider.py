@@ -38,3 +38,7 @@ class Slider(Button):
             max(self.origin.x - self.half_width, pos), self.origin.x + self.half_width
         )
         self.set_pos(x_pos, self.origin.y)
+
+    def set_progress(self, progress):
+        self.set_slider_pos(self.half_width * (0.5 - progress) + self.origin.x)
+

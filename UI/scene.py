@@ -9,7 +9,7 @@ from .utils import IMAGE
 
 class Scene:
     def __init__(
-        self, screen, width, height, bg_file="white.png"
+        self, screen, width, height, bg_file="white.png", *args, **kwargs
     ):
         bg = IMAGE(bg_file)
         self.width = width
