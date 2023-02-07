@@ -11,25 +11,31 @@ class ColorBar(PixelDisplay):
         "purple": (255, 100, 255),
         "tint": (100, 255, 255),
         "white": (255, 255, 255),
+        "grey": (150,150,150),
         "black": (0, 0, 0),
     }
 
-    def __init__(self, width, height, x, y, on_click=None):
+    def __init__(self, width, height, x, y, color='black', on_click=None):
         if width % 100 != 0:
             raise Exception("<width> for ColorBar must be multiples of 100")
         super(ColorBar, self).__init__(width, height, x, y)
         self.color_buffer = numpy.array(
-            [self.colors["black"] for i in range(100)], dtype="u1"
+            [self.colors[color] for i in range(100)], dtype="u1"
         )
         self.m = width
         self.n = height
         self.k = self.m // 100
         self.on_click = on_click
+        self.process()
 
     def set_color(self, i, color):
         if all([self.color_buffer[i][j] == self.colors[color][j] for j in range(3)]):
             return
         self.color_buffer[i] = self.colors[color]
+        self.process()
+
+    def set_arr(self, np_arr):
+        self.color_buffer = np_arr
         self.process()
 
     def process(self):
