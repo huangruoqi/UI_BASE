@@ -47,9 +47,7 @@ class Button(Container):
         self.sound = sound
         # default button
         if kwargs.get("image") is None:
-            temp = Text.get_font(self.text_fontsize).render(
-                self.text, True, self.color
-            )
+            temp = Text.get_font(self.text_fontsize).render(self.text, True, self.color)
             kwargs["image"] = temp
 
         super().__init__(*args, **kwargs)

@@ -8,9 +8,7 @@ from .utils import IMAGE
 
 
 class Scene:
-    def __init__(
-        self, screen, width, height, bg_file="white.png", *args, **kwargs
-    ):
+    def __init__(self, screen, width, height, bg_file="white.png", *args, **kwargs):
         bg = IMAGE(bg_file)
         self.width = width
         self.height = height
@@ -50,18 +48,16 @@ class Scene:
             if button.hovered and not button.hidden:
                 self.is_pointer = True
 
-
-    def add(self, key, value, layer_number = 0):
+    def add(self, key, value, layer_number=0):
         if not isinstance(value, Container):
             raise Exception("Not a component")
         if isinstance(value, Button):
             self.BUTTONS[key] = value
             self.GROUPS[1].add(value)
-        else: 
+        else:
             self.LAYERS[layer_number][key] = value
             self.GROUPS[layer_number].add(value)
         return value
-
 
     def get(self, key):
         for layer in self.LAYERS:

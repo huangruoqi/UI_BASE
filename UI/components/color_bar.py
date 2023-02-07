@@ -1,23 +1,26 @@
 from .pixel_display import PixelDisplay
 import numpy
 
+
 class ColorBar(PixelDisplay):
     colors = {
-        'black' : (0, 0, 0),
-        'red'   : (255, 100, 100),
-        'green' : (100, 255, 100),
-        'blue'  : (100, 255, 255),
-        'orange': (255, 255, 100),
-        'purple': (255, 100, 255),
-        'tint'  : (100, 255, 255),
-        'white' : (255, 255, 255),
+        "black": (0, 0, 0),
+        "red": (255, 100, 100),
+        "green": (100, 255, 100),
+        "blue": (100, 255, 255),
+        "orange": (255, 255, 100),
+        "purple": (255, 100, 255),
+        "tint": (100, 255, 255),
+        "white": (255, 255, 255),
     }
 
     def __init__(self, width, height, x, y, on_click=None):
         if width % 100 != 0:
             raise Exception("<width> for ColorBar must be multiples of 100")
         super(ColorBar, self).__init__(width, height, x, y)
-        self.color_buffer = numpy.array([self.colors['black'] for i in range(100)], dtype='u1')
+        self.color_buffer = numpy.array(
+            [self.colors["black"] for i in range(100)], dtype="u1"
+        )
         self.m = width
         self.n = height
         self.k = self.m // 100
@@ -28,10 +31,10 @@ class ColorBar(PixelDisplay):
         self.process()
 
     def process(self):
-        np_arr = numpy.zeros((self.m, self.n, 3), dtype='u1')
+        np_arr = numpy.zeros((self.m, self.n, 3), dtype="u1")
         for i in range(self.k):
             for j in range(self.n):
-                np_arr[i:self.m:self.k, j] = self.color_buffer
+                np_arr[i : self.m : self.k, j] = self.color_buffer
         self.set(np_arr)
 
     def is_click(self, click_pos):
@@ -45,4 +48,4 @@ class ColorBar(PixelDisplay):
             return
         if self.check_collide(mouse_pos):
             if clicked and self.on_click:
-                self.on_click((mouse_pos.x - self.get_pos().x + self.m/2)/ self.m)
+                self.on_click((mouse_pos.x - self.get_pos().x + self.m / 2) / self.m)

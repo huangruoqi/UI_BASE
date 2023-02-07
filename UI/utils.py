@@ -7,6 +7,7 @@ from .sound import Sound
 BASE = os.path.dirname(__file__)
 print(BASE)
 
+
 def IMAGE(name, relative=True):
     return pygame.image.load(
         (os.path.join(BASE, "assets/images/", name) if relative else name)
@@ -15,6 +16,7 @@ def IMAGE(name, relative=True):
 
 def SOUND(name, channel):
     return Sound(os.path.join(BASE, "assets/sounds/", name), channel)
+
 
 def FONT(name, size):
     return pygame.font.Font(os.path.join(BASE, "assets/fonts/", name), size)
@@ -26,6 +28,7 @@ def JSON(name, relative=True):
         encoding="utf8",
     ) as f:
         return json.load(f)
+
 
 class vec(list):
     def __init__(self, x, y=0):

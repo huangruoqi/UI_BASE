@@ -53,6 +53,6 @@ class App:
             self.display(mouse_pos, clicked)
             delta_time = clock.tick(60) / 1000
             pygame.display.flip()
-            
+
         pygame.quit()
         self.scene.close()

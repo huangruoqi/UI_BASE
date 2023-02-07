@@ -52,7 +52,6 @@ class Text(Container):
     def show(self):
         self.change_text(self.text)
 
-
     def get_font(size):
         return __class__.fontsizes.get(
             size,
