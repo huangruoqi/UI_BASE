@@ -9,7 +9,7 @@ class App:
         width, 
         height, 
         title="Title",
-        fps=60,
+        fps=30,
         *args, 
         **kwargs
     ):
