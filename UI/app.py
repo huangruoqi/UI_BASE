@@ -4,14 +4,8 @@ from .utils import vec, IMAGE
 
 
 class App:
-    def __init__(self, 
-        scene_class, 
-        width, 
-        height, 
-        title="Title",
-        fps=30,
-        *args, 
-        **kwargs
+    def __init__(
+        self, scene_class, width, height, title="Title", fps=30, *args, **kwargs
     ):
         pygame.init()
         GAME_RESOLUTION = (width, height)

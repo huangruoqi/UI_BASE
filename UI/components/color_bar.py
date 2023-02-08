@@ -11,11 +11,11 @@ class ColorBar(PixelDisplay):
         "purple": (255, 100, 255),
         "tint": (100, 255, 255),
         "white": (255, 255, 255),
-        "grey": (150,150,150),
+        "grey": (150, 150, 150),
         "black": (0, 0, 0),
     }
 
-    def __init__(self, width, height, x, y, color='black', on_click=None):
+    def __init__(self, width, height, x, y, color="black", on_click=None):
         if width % 100 != 0:
             raise Exception("<width> for ColorBar must be multiples of 100")
         super(ColorBar, self).__init__(width, height, x, y)
