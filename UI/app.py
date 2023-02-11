@@ -5,13 +5,12 @@ from .utils import vec, IMAGE
 
 class App:
     def __init__(
-        self, scene_class, width, height, title="Title", fps=30, *args, **kwargs
+        self, scene_class, width, height, title="Title", *args, **kwargs
     ):
         pygame.init()
         GAME_RESOLUTION = (width, height)
         screen = pygame.display.set_mode(GAME_RESOLUTION)
         self.scene = scene_class(screen, width, height, *args, **kwargs)
-        self.fps = fps
         pygame.display.set_caption(title)
         # Icon = IMAGE("icon.png") # add your own icon image
         # pygame.display.set_icon(Icon)
@@ -54,7 +53,7 @@ class App:
 
             self.update(delta_time, mouse_pos, clicked, pressing)
             self.display(mouse_pos, clicked)
-            delta_time = clock.tick(self.fps) / 1000
+            delta_time = clock.tick(30) / 1000
             pygame.display.flip()
 
         pygame.quit()
