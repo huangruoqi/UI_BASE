@@ -41,9 +41,13 @@ class Scene:
         self.is_pointer = False
         for button in btns:
             button.hovered = False
+            button.clicked = False
         for layer in self.LAYERS:
             for item in layer.values():
                 item.update(mouse_pos, clicked, pressed)
+                if isinstance(item, Button):
+                    if item.clicked:
+                        clicked = False
         for button in btns:
             if button.hovered and not button.hidden:
                 self.is_pointer = True

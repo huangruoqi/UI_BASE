@@ -54,6 +54,7 @@ class Button(Container):
         self.on_click = on_click
         self.can_hover = can_hover
         self.hovered = False
+        self.clicked = False
         self.transition = transition
         self.parameter = parameter
         self.animation = self.ANIMATIONS[animation](self, transition, parameter)
@@ -72,6 +73,7 @@ class Button(Container):
             if self.sound:
                 self.sound.play()
             self.on_click()
+            self.clicked = True
         else:
             raise NotImplementedError("Function: <on_click> not implemented!!")
 
