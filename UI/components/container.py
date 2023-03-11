@@ -54,6 +54,8 @@ class Container(pygame.sprite.Sprite):
     def reset_image(self):
         self.image = self.original_image
         self.rect = self.original_rect
+        if self.opacity != 1:
+            self.image.set_alpha(self.opacity * 255)
 
     def set_pos(self, x, y=None):
         pos = None
