@@ -14,7 +14,7 @@ class App:
         pygame.display.set_caption(title)
         # Icon = IMAGE("icon.png") # add your own icon image
         # pygame.display.set_icon(Icon)
-        pygame.mouse.set_visible(False)
+        # pygame.mouse.set_visible(False)
 
     def display(self, mouse_pos, clicked):
         self.scene.display(mouse_pos, clicked)

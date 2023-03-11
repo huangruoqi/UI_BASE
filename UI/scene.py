@@ -34,7 +34,7 @@ class Scene:
         self.background.draw(self.screen)
         for i in range(self.layer_number):
             self.GROUPS[i].draw(self.screen)
-        Mouse.draw(self.screen, mouse_pos, self.is_pointer)
+        # Mouse.draw(self.screen, mouse_pos, self.is_pointer)
 
     def update(self, delta_time, mouse_pos, clicked, pressed):
         btns = self.BUTTONS.values()
