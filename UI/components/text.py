@@ -22,9 +22,7 @@ class Text(Container):
         *args,
         **kwargs
     ):
-        super(Text, self).__init__(
-            image=pygame.Surface([1, 1]), align_mode=align_mode, *args, **kwargs
-        )
+        super(Text, self).__init__(align_mode=align_mode, *args, **kwargs)
         self.text = text
         self.size = size
         self.color = color

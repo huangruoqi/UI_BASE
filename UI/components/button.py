@@ -46,11 +46,12 @@ class Button(Container):
         self.color = color
         self.sound = sound
         # default button
-        if kwargs.get("image") is None:
-            temp = Text.get_font(self.text_fontsize).render(self.text, True, self.color)
-            kwargs["image"] = temp
 
         super().__init__(*args, **kwargs)
+        if kwargs.get("image_file") is None and self.text is not None:
+            temp = Text.get_font(self.text_fontsize).render(self.text, True, self.color)
+            pos = self.get_pos()
+            self.set_image(temp).set_pos(pos)
         self.on_click = on_click
         self.can_hover = can_hover
         self.hovered = False

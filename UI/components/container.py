@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *  # noqa
-from ..utils import vec
+from ..utils import vec, IMAGE
 
 EMPTY = pygame.Surface([1, 1], pygame.SRCALPHA)
 
@@ -8,7 +8,8 @@ EMPTY = pygame.Surface([1, 1], pygame.SRCALPHA)
 class Container(pygame.sprite.Sprite):
     def __init__(
         self,
-        image,
+        image_file=None,
+        image_relative=False,
         width=None,
         height=None,
         ratio=1,
@@ -18,7 +19,10 @@ class Container(pygame.sprite.Sprite):
         opacity=1,
     ):
         super().__init__()
-        self.set_image(image, width, height, ratio, opacity)
+        if image_file is None:
+            self.set_image(EMPTY, width, height, ratio, opacity)
+        else:
+            self.set_image(IMAGE(image_file, image_relative), width, height, ratio, opacity)
         self.align_mode = align_mode
         self.opacity = opacity
         self.set_pos(x, y)

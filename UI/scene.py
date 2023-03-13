@@ -8,11 +8,13 @@ from .utils import IMAGE
 
 
 class Scene:
-    def __init__(self, screen, width, height, bg_file="white.png", *args, **kwargs):
-        bg = IMAGE(bg_file)
+    def __init__(self, screen, width, height, bg_file=None, *args, **kwargs):
         self.width = width
         self.height = height
-        self.background = Background(bg, width, height)
+        if bg_file is None:
+            self.background = Background("white.png", True, width, height)
+        else:
+            self.background = Background(bg_file, False, width, height)
         self.background_music = None
         self.screen = screen
         self.is_pointer = False
