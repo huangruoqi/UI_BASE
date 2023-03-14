@@ -5,12 +5,15 @@ from .utils import vec, IMAGE
 
 class App:
     def __init__(
-        self, scene_class, width, height, title="Title", *args, **kwargs
+        self, scene_classes, width, height, title="Title", *args, **kwargs
     ):
         pygame.init()
         GAME_RESOLUTION = (width, height)
         screen = pygame.display.set_mode(GAME_RESOLUTION)
-        self.scene = scene_class(screen, width, height, *args, **kwargs)
+        self.scenes = [i(self, screen, width, height, *args, **kwargs) for i in scene_classes]
+        self.scene = self.scenes[0]
+        self.next_scene = None
+        self.next_scene_callback = None
         pygame.display.set_caption(title)
         # Icon = IMAGE("icon.png") # add your own icon image
         # pygame.display.set_icon(Icon)
@@ -22,6 +25,10 @@ class App:
     def update(self, delta_time, mouse_pos, clicked, pressed):
         self.scene.update(delta_time, mouse_pos, clicked, pressed)
 
+    def change_scene(self, scene_index, func=lambda s:0):
+        self.next_scene = self.scenes[scene_index]
+        self.next_scene_callback = func
+
     def run(self):
         # pygame setup
         clock = pygame.time.Clock()
@@ -30,8 +37,6 @@ class App:
         pressing = False
         delta_time = 0.016
         running = True
-        if self.scene.background_music is not None:
-            self.scene.background_music.play()
 
         # app settings
         while running:
@@ -52,6 +57,11 @@ class App:
                     pressing = True
 
             self.update(delta_time, mouse_pos, clicked, pressing)
+            if self.next_scene is not None:
+                self.scene = self.next_scene
+                self.next_scene_callback(self.scene)
+                self.next_scene = None
+                self.next_scene_callback = None
             self.display(mouse_pos, clicked)
             delta_time = clock.tick(30) / 1000
             pygame.display.flip()

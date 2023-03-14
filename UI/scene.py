@@ -8,7 +8,8 @@ from .utils import IMAGE
 
 
 class Scene:
-    def __init__(self, screen, width, height, bg_file=None, *args, **kwargs):
+    def __init__(self, app, screen, width, height, bg_file=None, *args, **kwargs):
+        self.app = app
         self.width = width
         self.height = height
         if bg_file is None:
