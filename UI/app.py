@@ -67,4 +67,5 @@ class App:
             pygame.display.flip()
 
         pygame.quit()
-        self.scene.close()
+        for s in self.scenes:
+            s.close()
