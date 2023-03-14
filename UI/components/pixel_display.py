@@ -10,6 +10,5 @@ class PixelDisplay(Container):
         pos = self.get_pos()
         self.set_image(image).set_pos(pos)
 
-
     def set(self, np_arr):
         pygame.surfarray.blit_array(self.image, np_arr)

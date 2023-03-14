@@ -4,13 +4,13 @@ from .utils import vec, IMAGE
 
 
 class App:
-    def __init__(
-        self, scene_classes, width, height, title="Title", *args, **kwargs
-    ):
+    def __init__(self, scene_classes, width, height, title="Title", *args, **kwargs):
         pygame.init()
         GAME_RESOLUTION = (width, height)
         screen = pygame.display.set_mode(GAME_RESOLUTION)
-        self.scenes = [i(self, screen, width, height, *args, **kwargs) for i in scene_classes]
+        self.scenes = [
+            i(self, screen, width, height, *args, **kwargs) for i in scene_classes
+        ]
         self.scene = self.scenes[0]
         self.next_scene = None
         self.next_scene_callback = None
@@ -25,7 +25,7 @@ class App:
     def update(self, delta_time, mouse_pos, clicked, pressed):
         self.scene.update(delta_time, mouse_pos, clicked, pressed)
 
-    def change_scene(self, scene_index, func=lambda s:0):
+    def change_scene(self, scene_index, func=lambda s: 0):
         self.next_scene = self.scenes[scene_index]
         self.next_scene_callback = func
 

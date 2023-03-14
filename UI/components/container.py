@@ -22,7 +22,9 @@ class Container(pygame.sprite.Sprite):
         if image_file is None:
             self.set_image(EMPTY, width, height, ratio, opacity)
         else:
-            self.set_image(IMAGE(image_file, image_relative), width, height, ratio, opacity)
+            self.set_image(
+                IMAGE(image_file, image_relative), width, height, ratio, opacity
+            )
         self.align_mode = align_mode
         self.opacity = opacity
         self.set_pos(x, y)
