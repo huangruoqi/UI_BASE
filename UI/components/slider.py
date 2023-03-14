@@ -17,11 +17,12 @@ class Slider(Button):
         *args,
         **kwargs
     ):
-        kwargs["image"] = pygame.Surface([width, height])
-        kwargs["image"].fill(color)
         super().__init__(on_click=on_click, opacity=0.8, *args, **kwargs)
-        self.dragged = False
+        image = pygame.Surface([width, height])
+        image.fill(color)
         self.origin = self.get_pos()
+        self.set_image(image)
+        self.dragged = False
         self.half_width = drag_width // 2
         self.set_pos(self.origin.x - self.half_width, self.origin.y)
         self.on_change = on_change
