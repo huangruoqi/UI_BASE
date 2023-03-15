@@ -37,14 +37,15 @@ class Button(Container):
         text=None,
         text_fontsize=24,
         color=(150, 200, 100),
-        sound=SOUND("mouse-click.wav", Channel.UI),
+        # sound=SOUND("mouse-click.wav", Channel.UI),
+        sound=None,
         *args,
         **kwargs
     ):
         self.text = text
         self.text_fontsize = text_fontsize
         self.color = color
-        self.sound = sound
+        # self.sound = sound
         # default button
 
         super().__init__(*args, **kwargs)
