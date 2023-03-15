@@ -45,7 +45,7 @@ class Button(Container):
         self.text = text
         self.text_fontsize = text_fontsize
         self.color = color
-        # self.sound = sound
+        self.sound = sound
         # default button
 
         super().__init__(*args, **kwargs)
