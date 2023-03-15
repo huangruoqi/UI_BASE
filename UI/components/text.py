@@ -6,8 +6,11 @@ import os
 pygame.font.init()
 
 DEFAULT_SIZE = 32
+
+
 def FONT(font_file, size):
     return pygame.font.Font(os.path.join("assets", "fonts", font_file), size)
+
 
 class Text(Container):
     fontsizes = {}
