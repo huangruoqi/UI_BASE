@@ -68,5 +68,4 @@ class App:
 
         pygame.quit()
         for s in self.scenes:
-            if s is not None:
-                s.close()
+            s.close()
