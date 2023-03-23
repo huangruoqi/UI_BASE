@@ -30,7 +30,7 @@ class Container(pygame.sprite.Sprite):
         self.set_pos(x, y)
         self.check_collide_original_rect = False
         self.hidden = False
-        self.inner_components = []
+        self.inner_components = {}
 
     def set_image(self, image, width=None, height=None, ratio=1, opacity=1):
         self.set_temp_image(image, width, height, ratio, opacity)

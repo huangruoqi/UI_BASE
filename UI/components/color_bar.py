@@ -3,24 +3,21 @@ import numpy
 
 
 class ColorBar(PixelDisplay):
+    # names are not correct, edited from chatgpt result
     colors = {
-        "red": (255, 100, 100),
-        "green": (100, 255, 100),
-        "blue": (100, 100, 255),
-        "orange": (255, 255, 100),
-        "purple": (255, 100, 255),
-        "tint": (100, 255, 255),
-        "white": (255, 255, 255),
-        "grey": (150, 150, 150),
-        "red1": (255, 100, 100),
-        "green1": (100, 255, 100),
-        "blue1": (100, 100, 255),
-        "orange1": (255, 255, 100),
-        "purple1": (255, 100, 255),
-        "tint1": (100, 255, 255),
-        "white1": (255, 255, 255),
-        "grey1": (150, 150, 150),
-        "black": (0, 0, 0),
+        "dark_red": (139, 128, 0),
+        "maroon": (128, 0, 0),
+        "dark_orange": (255, 140, 0),
+        "olive": (60, 32, 0),
+        "dark_green": (0, 100, 0),
+        "navy_blue": (0, 20, 150),
+        "indigo": (75, 0, 130),
+        "dark_violet": (148, 0, 211),
+        "grey": (47, 79, 79),
+        "sienna": (160, 40, 75),
+        "saddle_brown": (139, 69, 19),
+        "midnight_blue": (40, 25, 112),
+        "black": (0, 0, 0)
     }
 
     def __init__(self, width, height, x, y, color="black", on_click=None):

@@ -14,6 +14,8 @@ class App:
         self.scene = self.scenes[0]
         self.next_scene = None
         self.next_scene_callback = None
+        self.curr_scene_index = 0
+        self.prev_scene_index = 0
         pygame.display.set_caption(title)
         # Icon = IMAGE("icon.png") # add your own icon image
         # pygame.display.set_icon(Icon)
@@ -22,10 +24,12 @@ class App:
     def display(self, mouse_pos, clicked):
         self.scene.display(mouse_pos, clicked)
 
-    def update(self, delta_time, mouse_pos, keyboard_inputs, clicked, pressed):
+    def update(self, delta_time, mouse_pos, keyboard_inputs, clicked, pressed,):
         self.scene.update(delta_time, mouse_pos, keyboard_inputs, clicked, pressed)
 
     def change_scene(self, scene_index, func=lambda s: 0):
+        self.prev_scene_index = self.curr_scene_index
+        self.curr_scene_index = scene_index
         self.next_scene = self.scenes[scene_index]
         self.next_scene_callback = func
 
