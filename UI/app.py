@@ -22,8 +22,8 @@ class App:
     def display(self, mouse_pos, clicked):
         self.scene.display(mouse_pos, clicked)
 
-    def update(self, delta_time, mouse_pos, clicked, pressed):
-        self.scene.update(delta_time, mouse_pos, clicked, pressed)
+    def update(self, delta_time, mouse_pos, keyboard_inputs, clicked, pressed):
+        self.scene.update(delta_time, mouse_pos, keyboard_inputs, clicked, pressed)
 
     def change_scene(self, scene_index, func=lambda s: 0):
         self.next_scene = self.scenes[scene_index]
@@ -37,11 +37,13 @@ class App:
         pressing = False
         delta_time = 0.016
         running = True
-
+        keyboard_inputs = []
+        pygame.key.set_repeat(250, 50)
         # app settings
         while running:
             clicked = False
             mouse_pos.x, mouse_pos.y = pygame.mouse.get_pos()
+            keyboard_inputs.clear()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
@@ -55,8 +57,13 @@ class App:
                             # print(str(mouse_pos) + " is clicked!")
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pressing = True
+                if event.type == pygame.TEXTINPUT:
+                    keyboard_inputs.append(event.text)
+                if event.type == pygame.KEYDOWN:
+                    if event.unicode == '\b':
+                        keyboard_inputs.append('\b')
 
-            self.update(delta_time, mouse_pos, clicked, pressing)
+            self.update(delta_time, mouse_pos, keyboard_inputs, clicked, pressing)
             if self.next_scene is not None:
                 self.scene = self.next_scene
                 self.next_scene_callback(self.scene)

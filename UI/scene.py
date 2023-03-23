@@ -40,7 +40,7 @@ class Scene:
             self.GROUPS[i].draw(self.screen)
         # Mouse.draw(self.screen, mouse_pos, self.is_pointer)
 
-    def update(self, delta_time, mouse_pos, clicked, pressed):
+    def update(self, delta_time, mouse_pos, keyboard_inputs, clicked, pressed):
         btns = self.BUTTONS.values()
         self.is_pointer = False
         for button in btns:
@@ -48,7 +48,7 @@ class Scene:
             button.clicked = False
         for layer in self.LAYERS:
             for item in layer.values():
-                item.update(mouse_pos, clicked, pressed)
+                item.update(delta_time, mouse_pos, keyboard_inputs, clicked, pressed)
                 if isinstance(item, Button):
                     if item.clicked:
                         clicked = False
@@ -59,12 +59,12 @@ class Scene:
     def add(self, key, value, layer_number=0):
         if not isinstance(value, Container):
             raise Exception("Not a component")
-        if isinstance(value, Button):
-            self.BUTTONS[key] = value
-            self.GROUPS[1].add(value)
-        else:
-            self.LAYERS[layer_number][key] = value
-            self.GROUPS[layer_number].add(value)
+        if layer_number==0 and isinstance(value, Button):
+            layer_number = 1
+        self.LAYERS[layer_number][key] = value
+        self.GROUPS[layer_number].add(value)
+        for c in value.inner_components:
+            self.add(f'inner_{c}', c, layer_number=layer_number+2)
         return value
 
     def get(self, key):
