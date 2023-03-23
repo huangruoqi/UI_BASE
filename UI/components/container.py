@@ -87,7 +87,7 @@ class Container(pygame.sprite.Sprite):
         else:
             raise Exception("align_mode not found")
 
-    def update(self, delta_time, mouse_pos, keyboard_inputs, clicked, pressed):
+    def update(self, delta_time, mouse_pos, keyboard_inputs, clicked, pressed, screen_clicked):
         if self.hidden:
             self.set_temp_image(EMPTY)
             return False

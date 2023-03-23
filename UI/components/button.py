@@ -79,8 +79,8 @@ class Button(Container):
         else:
             raise NotImplementedError("Function: <on_click> not implemented!!")
 
-    def update(self, delta_time, mouse_pos, keyboard_inputs, clicked, pressed):
-        if not super(Button, self).update(delta_time, mouse_pos, keyboard_inputs, clicked, pressed):
+    def update(self, delta_time, mouse_pos, keyboard_inputs, clicked, pressed, screen_clicked):
+        if not super(Button, self).update(delta_time, mouse_pos, keyboard_inputs, clicked, pressed, screen_clicked):
             return
         current_time = time.time()
         can_hover = self.can_hover is None or (

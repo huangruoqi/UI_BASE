@@ -43,12 +43,13 @@ class Scene:
     def update(self, delta_time, mouse_pos, keyboard_inputs, clicked, pressed):
         btns = self.BUTTONS.values()
         self.is_pointer = False
+        screen_clicked = clicked
         for button in btns:
             button.hovered = False
             button.clicked = False
         for layer in self.LAYERS:
             for item in layer.values():
-                item.update(delta_time, mouse_pos, keyboard_inputs, clicked, pressed)
+                item.update(delta_time, mouse_pos, keyboard_inputs, clicked, pressed, screen_clicked)
                 if isinstance(item, Button):
                     if item.clicked:
                         clicked = False
@@ -67,11 +68,22 @@ class Scene:
             self.add(f'inner_{c}', c, layer_number=layer_number+2)
         return value
 
+    def remove(self, key):
+        for layer in self.LAYERS:
+            item = layer.get(key)
+            if item is not None:
+                item.kill()
+                del layer[key]
+                return
+        
+
+
     def get(self, key):
         for layer in self.LAYERS:
             item = layer.get(key)
             if item is not None:
                 return item
+
 
     def close(self):
         pass

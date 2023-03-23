@@ -39,7 +39,7 @@ class App:
         running = True
         keyboard_inputs = []
         pygame.key.set_repeat(250, 50)
-        # app settings
+
         while running:
             clicked = False
             mouse_pos.x, mouse_pos.y = pygame.mouse.get_pos()

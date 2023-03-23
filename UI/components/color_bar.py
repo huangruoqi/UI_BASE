@@ -59,8 +59,8 @@ class ColorBar(PixelDisplay):
     def check_collide(self, mouse_pos):
         return self.rect.collidepoint(mouse_pos)
 
-    def update(self, delta_time, mouse_pos, keyboard_inputs, clicked, pressed):
-        if not super(ColorBar, self).update(delta_time, mouse_pos, keyboard_inputs, clicked, pressed):
+    def update(self, delta_time, mouse_pos, keyboard_inputs, clicked, pressed, screen_clicked):
+        if not super(ColorBar, self).update(delta_time, mouse_pos, keyboard_inputs, clicked, pressed, screen_clicked):
             return
         if self.check_collide(mouse_pos):
             if clicked and self.on_click:

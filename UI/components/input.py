@@ -3,13 +3,13 @@ from .text import Text
 
 
 class Input(Button):
-    def __init__(self, image_file, fontsize, color, *args, **kwargs):
+    def __init__(self, image_file, text, fontsize, color, width, *args, **kwargs):
         super().__init__(
             image_file=image_file,
             animation='none',
             align_mode='TOPLEFT',
+            width=width,
             height=fontsize+2,
-            width = 600,
             *args, **kwargs
         )
         x, y = self.get_pos()
@@ -18,16 +18,24 @@ class Input(Button):
         self.bar = Text('|', fontsize, 'CENTER', color, x=self.base_x, y=self.base_y)
         self.inner_components.append(self.text_display)
         self.inner_components.append(self.bar)
-        self.text = ''
+        self.text = text
         self.font_width = fontsize * 0.546 # anonymous pro
         self.blink_wait_time = 0
-        self.editting = True
+        self.editting = False
         self.cursor_hidden = True
         self.bar.hide()
-        self.change_text(self.t)
+        self.change_text(self.text)
+        def on_click():
+            self.editting = True
 
-    def update(self, delta_time, mouse_pos, keyboard_inputs, clicked, pressed):
-        super().update(delta_time, mouse_pos, keyboard_inputs, clicked, pressed)
+        self.on_click = on_click
+
+    def update(self, delta_time, mouse_pos, keyboard_inputs, clicked, pressed, screen_clicked):
+        if screen_clicked:
+            self.editting = False
+            self.bar.hide()
+            self.cursor_hidden = True
+        super().update(delta_time, mouse_pos, keyboard_inputs, clicked, pressed, screen_clicked)
         self.blink_wait_time += delta_time
         if self.editting:
             # default blink time is 530ms
@@ -38,16 +46,13 @@ class Input(Button):
                     self.bar.hide()
                 self.cursor_hidden = not self.cursor_hidden
                 self.blink_wait_time = 0
-
-
-
-        if keyboard_inputs:
-            for c in keyboard_inputs:
-                if c != '\b':
-                    self.t += c
-                else:
-                    self.t = self.t[:-1]
-            self.change_text(self.t)
+            if keyboard_inputs:
+                for c in keyboard_inputs:
+                    if c != '\b':
+                        self.text += c
+                    else:
+                        self.text = self.text[:-1]
+                self.change_text(self.text)
 
     def change_text(self, text):
         self.text_display.change_text(text)
