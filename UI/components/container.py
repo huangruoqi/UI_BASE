@@ -95,7 +95,13 @@ class Container(pygame.sprite.Sprite):
 
     def hide(self):
         self.hidden = True
+        if self.inner_components:
+            for k, v in self.inner_components.items():
+                v.hide()
 
     def show(self):
         self.hidden = False
         self.reset_image()
+        if self.inner_components:
+            for k, v in self.inner_components.items():
+                v.show()

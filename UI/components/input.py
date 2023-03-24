@@ -66,3 +66,7 @@ class Input(Button):
         self.text_display.set_pos(x+10, y)
         self.base_x, self.base_y = x+10, y+(self.font_size+2)//2
         self.bar.set_pos(self.base_x, self.base_y)
+    
+    def show(self):
+        super().show()
+        self.bar.hide()

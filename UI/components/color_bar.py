@@ -34,9 +34,14 @@ class ColorBar(PixelDisplay):
         self.process()
 
     def set_color(self, i, color):
-        if all([self.color_buffer[i][j] == self.colors[color][j] for j in range(3)]):
-            return
-        self.color_buffer[i] = self.colors[color]
+        if isinstance(color, str):
+            if all([self.color_buffer[i][j] == self.colors[color][j] for j in range(3)]):
+                return
+            self.color_buffer[i] = self.colors[color]
+        else:
+            if all([self.color_buffer[i][j] == color[j] for j in range(3)]):
+                return
+            self.color_buffer[i] = color
         self.process()
 
     def set_arr(self, np_arr):
