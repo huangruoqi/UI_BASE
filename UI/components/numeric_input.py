@@ -13,13 +13,14 @@ class NumericInput(Button):
         value,
         color,
         width,
+        use_indicator=False,
         max_character=20,
         *args,
         **kwargs,
     ):
         self.text_display = Text("", fontsize, "TOPLEFT", color)
         self.bar = Text("|", fontsize, "CENTER", color)
-        self.indicator = Text("Unlabeled", fontsize * 2 // 3, "TOPLEFT", (0, 0, 0))
+        self.indicator = None
         self.base_x, self.base_y = 0, 0
         self.font_size = fontsize
         self.font_width = fontsize * 0.546  # anonymous pro
@@ -40,13 +41,16 @@ class NumericInput(Button):
             f"inner_{NumericInput.object_count}_text"
         ] = self.text_display
         self.inner_components[f"inner_{NumericInput.object_count}_bar"] = self.bar
-        self.inner_components[
-            f"inner_{NumericInput.object_count}_indicator"
-        ] = self.indicator
         NumericInput.object_count += 1
         self.blink_wait_time = 0
         self.editing = False
         self.cursor_hidden = True
+        self.use_indicator = use_indicator
+        if use_indicator:
+            self.indicator = Text("Unlabeled", fontsize * 2 // 3, "TOPLEFT", (0, 0, 0))
+            self.inner_components[
+                f"inner_{NumericInput.object_count}_indicator"
+            ] = self.indicator
         self.bar.hide()
         self.change_text(self.text)
 
@@ -88,11 +92,13 @@ class NumericInput(Button):
                 self.change_text(self.text)
             if len(self.text.strip()) == 0:
                 self.value = float("nan")
-                self.indicator.show()
                 x, y = self.get_pos()
-                self.indicator.set_pos(x, y + 50)
+                if self.indicator is not None:
+                    self.indicator.show()
+                    self.indicator.set_pos(x, y + 50)
             else:
-                self.indicator.hide()
+                if self.indicator is not None:
+                    self.indicator.hide()
 
     def validate_input(self, text):
         try:
@@ -107,6 +113,12 @@ class NumericInput(Button):
             self.base_x + self.text_display.rect.w + self.font_width / 5, self.base_y
         )
 
+    def change_value(self, value):
+        self.value = float(value)
+        self.text = str(self.value)[:self.max_charactor]
+        self.change_text(self.text)
+        assert (abs(self.value - float(self.text)<0.1))
+
     def set_pos(self, x, y=None):
         super().set_pos(x, y)
         self.text_display.set_pos(x + 10, y)
@@ -118,4 +130,5 @@ class NumericInput(Button):
     def show(self):
         super().show()
         self.bar.hide()
-        self.indicator.hide()
+        if self.indicator is not None:
+            self.indicator.hide()

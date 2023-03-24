@@ -14,10 +14,11 @@ class Slider(Button):
         interval=[0, 31],
         color=(0, 0, 0),
         on_click=lambda: 0,
+        opacity=0.5,
         *args,
         **kwargs
     ):
-        super().__init__(on_click=on_click, opacity=0.8, *args, **kwargs)
+        super().__init__(on_click=on_click, opacity=opacity, *args, **kwargs)
         image = pygame.Surface([width, height])
         image.fill(color)
         self.origin = self.get_pos()
