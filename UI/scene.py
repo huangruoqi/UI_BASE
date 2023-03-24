@@ -53,7 +53,14 @@ class Scene:
             button.clicked = False
         for layer in self.LAYERS:
             for item in layer.values():
-                item.update(delta_time, mouse_pos, keyboard_inputs, clicked, pressed, screen_clicked)
+                item.update(
+                    delta_time,
+                    mouse_pos,
+                    keyboard_inputs,
+                    clicked,
+                    pressed,
+                    screen_clicked,
+                )
                 if isinstance(item, Button):
                     if item.clicked:
                         clicked = False
@@ -70,19 +77,19 @@ class Scene:
                 self.LAYERS[l][k] = v
                 self.GROUPS[l].add(v)
                 for k, v in v.inner_components.items():
-                    self.add(k, v, layer_number=l+2)
+                    self.add(k, v, layer_number=l + 2)
         self.items_to_add.clear()
 
     def add(self, key, value, layer_number=0):
         if not isinstance(value, Container):
             raise Exception("Not a component")
-        if layer_number==0 and isinstance(value, Button):
+        if layer_number == 0 and isinstance(value, Button):
             layer_number = 1
         if not self.started:
             self.LAYERS[layer_number][key] = value
             self.GROUPS[layer_number].add(value)
             for k, v in value.inner_components.items():
-                self.add(k, v, layer_number=layer_number+2)
+                self.add(k, v, layer_number=layer_number + 2)
         else:
             self.items_to_add.append((key, value, layer_number))
         return value
@@ -96,15 +103,12 @@ class Scene:
                 for k in item.inner_components:
                     self.remove(k)
                 return
-        
-
 
     def get(self, key):
         for layer in self.LAYERS:
             item = layer.get(key)
             if item is not None:
                 return item
-
 
     def close(self):
         pass

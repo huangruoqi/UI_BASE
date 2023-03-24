@@ -30,8 +30,12 @@ class Slider(Button):
         self.interval = interval
         self.sound = None
 
-    def update(self, delta_time, mouse_pos, keyboard_inputs, clicked, pressed, screen_clicked):
-        super().update(delta_time, mouse_pos, keyboard_inputs, clicked, pressed, screen_clicked)
+    def update(
+        self, delta_time, mouse_pos, keyboard_inputs, clicked, pressed, screen_clicked
+    ):
+        super().update(
+            delta_time, mouse_pos, keyboard_inputs, clicked, pressed, screen_clicked
+        )
         if self.dragged:
             self.dragged = pressed
             val = (

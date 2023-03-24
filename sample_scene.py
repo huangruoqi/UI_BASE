@@ -27,5 +27,9 @@ class SampleScene(Scene):
         )
         self.add("text", Text("something", x=200, y=300))
 
-    def update(self, delta_time, mouse_pos, keyboard_inputs, clicked, pressed, screen_clicked):
-        super().update(delta_time, mouse_pos, keyboard_inputs, clicked, pressed, screen_clicked)
+    def update(
+        self, delta_time, mouse_pos, keyboard_inputs, clicked, pressed, screen_clicked
+    ):
+        super().update(
+            delta_time, mouse_pos, keyboard_inputs, clicked, pressed, screen_clicked
+        )

@@ -17,7 +17,7 @@ class ColorBar(PixelDisplay):
         "sienna": (160, 40, 75),
         "saddle_brown": (139, 69, 19),
         "midnight_blue": (40, 25, 112),
-        "black": (0, 0, 0)
+        "black": (0, 0, 0),
     }
 
     def __init__(self, width, height, x, y, color="black", on_click=None):
@@ -35,7 +35,9 @@ class ColorBar(PixelDisplay):
 
     def set_color(self, i, color):
         if isinstance(color, str):
-            if all([self.color_buffer[i][j] == self.colors[color][j] for j in range(3)]):
+            if all(
+                [self.color_buffer[i][j] == self.colors[color][j] for j in range(3)]
+            ):
                 return
             self.color_buffer[i] = self.colors[color]
         else:
@@ -61,8 +63,12 @@ class ColorBar(PixelDisplay):
     def check_collide(self, mouse_pos):
         return self.rect.collidepoint(mouse_pos)
 
-    def update(self, delta_time, mouse_pos, keyboard_inputs, clicked, pressed, screen_clicked):
-        if not super(ColorBar, self).update(delta_time, mouse_pos, keyboard_inputs, clicked, pressed, screen_clicked):
+    def update(
+        self, delta_time, mouse_pos, keyboard_inputs, clicked, pressed, screen_clicked
+    ):
+        if not super(ColorBar, self).update(
+            delta_time, mouse_pos, keyboard_inputs, clicked, pressed, screen_clicked
+        ):
             return
         if self.check_collide(mouse_pos):
             if clicked and self.on_click:

@@ -24,7 +24,14 @@ class App:
     def display(self, mouse_pos, clicked):
         self.scene.display(mouse_pos, clicked)
 
-    def update(self, delta_time, mouse_pos, keyboard_inputs, clicked, pressed,):
+    def update(
+        self,
+        delta_time,
+        mouse_pos,
+        keyboard_inputs,
+        clicked,
+        pressed,
+    ):
         self.scene.update(delta_time, mouse_pos, keyboard_inputs, clicked, pressed)
 
     def change_scene(self, scene_index, func=lambda s: 0):
@@ -64,8 +71,8 @@ class App:
                 if event.type == pygame.TEXTINPUT:
                     keyboard_inputs.append(event.text)
                 if event.type == pygame.KEYDOWN:
-                    if event.unicode == '\b':
-                        keyboard_inputs.append('\b')
+                    if event.unicode == "\b":
+                        keyboard_inputs.append("\b")
 
             self.update(delta_time, mouse_pos, keyboard_inputs, clicked, pressing)
             if self.next_scene is not None:
