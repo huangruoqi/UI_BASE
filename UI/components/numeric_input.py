@@ -20,6 +20,7 @@ class NumericInput(Button):
     ):
         self.text_display = Text("", fontsize, "TOPLEFT", color)
         self.bar = Text("|", fontsize, "CENTER", color)
+        self.negative_sign = Text("-", fontsize, "CENTER", color)
         self.indicator = None
         self.base_x, self.base_y = 0, 0
         self.font_size = fontsize
@@ -41,6 +42,7 @@ class NumericInput(Button):
             f"inner_{NumericInput.object_count}_text"
         ] = self.text_display
         self.inner_components[f"inner_{NumericInput.object_count}_bar"] = self.bar
+        self.inner_components[f"inner_{NumericInput.object_count}_neg"] = self.negative_sign
         NumericInput.object_count += 1
         self.blink_wait_time = 0
         self.editing = False
@@ -52,6 +54,7 @@ class NumericInput(Button):
                 f"inner_{NumericInput.object_count}_indicator"
             ] = self.indicator
         self.bar.hide()
+        self.negative_sign.hide()
         self.change_text(self.text)
 
         def on_click():
@@ -61,6 +64,7 @@ class NumericInput(Button):
         self.value = value
         self.upper_bound = 1000000
         self.lower_bound = -1000000
+        self.negative = False
 
     def update(
         self, delta_time, mouse_pos, keyboard_inputs, clicked, pressed, screen_clicked
@@ -83,19 +87,27 @@ class NumericInput(Button):
                 self.cursor_hidden = not self.cursor_hidden
                 self.blink_wait_time = 0
             x, y = self.get_pos()
+            abs_value = None
             if keyboard_inputs:
                 for c in keyboard_inputs:
-                    if c != "\b":
+                    if c == "-":
+                        self.negative = not self.negative
+                        self.value = -self.value
+                    elif c != "\b":
                         if len(self.text) < self.max_charactor:
                             if self.validate_input(self.text + c):
                                 self.text += c
-                                self.value = float(self.text)
+                                abs_value = float(self.text)
                     else:
-                        self.text = self.text[:-1]
+                        if len(self.text.strip()) == 0:
+                            if self.negative:
+                                self.negative = False
+                        else:
+                            self.text = self.text[:-1]
                         if len(self.text.strip()) == 0:
                             self.value = float("nan")
                         else:
-                            self.value = float(self.text)
+                            abs_value = float(self.text)
                 self.change_text(self.text)
                 if len(self.text.strip()) == 0:
                     if self.indicator is not None:
@@ -118,6 +130,15 @@ class NumericInput(Button):
                     else:
                         if self.indicator is not None:
                             self.indicator.hide()
+                if self.negative:
+                    self.negative_sign.show()
+                else:
+                    self.negative_sign.hide()
+                if abs_value is not None:
+                    if self.negative:
+                        self.value = -abs_value
+                    else:
+                        self.value = abs_value
 
     def validate_input(self, text):
         try:
@@ -134,20 +155,30 @@ class NumericInput(Button):
 
     def change_value(self, value):
         self.value = float(value)
-        self.text = str(self.value)[:self.max_charactor]
+        self.negative = self.value < 0
+        if self.negative:
+            self.negative_sign.show()
+        else:
+            self.negative_sign.hide()
+        self.text = str(abs(self.value))[:self.max_charactor]
         self.change_text(self.text)
-        assert (abs(self.value - float(self.text)<0.1))
+    
 
     def set_pos(self, x, y=None):
         super().set_pos(x, y)
-        self.text_display.set_pos(x + 10, y)
-        self.base_x, self.base_y = x + 10, y + (self.font_size + 2) // 2
+        self.text_display.set_pos(x + 10 + self.font_width, y)
+        self.base_x, self.base_y = x + 10 + self.font_width, y + (self.font_size + 2) // 2
         self.bar.set_pos(
             self.base_x + self.text_display.rect.w + self.font_width / 5, self.base_y
+        )
+        self.negative_sign.set_pos(
+            self.base_x - self.font_width//2, self.base_y - (self.font_size + 2) // 16
         )
 
     def show(self):
         super().show()
         self.bar.hide()
+        if self.negative:
+            self.negative_sign.show()
         if self.indicator is not None:
             self.indicator.hide()
