@@ -123,13 +123,13 @@ class NumericInput(Button):
                         self.value = self.lower_bound
                         if self.indicator is not None:
                             self.indicator.show()
-                            self.indicator.change_text("Too small!")
+                            self.indicator.change_text(f"Min:{str(self.value)[:self.max_charactor]}")
                             self.indicator.set_pos(x+self.max_width/2, y+self.font_size*2)
                     elif self.value > self.upper_bound:
                         self.value = self.upper_bound
                         if self.indicator is not None:
                             self.indicator.show()
-                            self.indicator.change_text("Too big!")
+                            self.indicator.change_text(f"Max:{str(self.value)[:self.max_charactor]}")
                             self.indicator.set_pos(x+self.max_width/2, y+self.font_size*2)
                     else:
                         if self.indicator is not None:
