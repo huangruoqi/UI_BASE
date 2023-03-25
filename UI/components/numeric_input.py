@@ -59,6 +59,8 @@ class NumericInput(Button):
 
         self.on_click = on_click
         self.value = value
+        self.upper_bound = 1000000
+        self.lower_bound = -1000000
 
     def update(
         self, delta_time, mouse_pos, keyboard_inputs, clicked, pressed, screen_clicked
@@ -80,6 +82,7 @@ class NumericInput(Button):
                     self.bar.hide()
                 self.cursor_hidden = not self.cursor_hidden
                 self.blink_wait_time = 0
+            x, y = self.get_pos()
             if keyboard_inputs:
                 for c in keyboard_inputs:
                     if c != "\b":
@@ -89,16 +92,32 @@ class NumericInput(Button):
                                 self.value = float(self.text)
                     else:
                         self.text = self.text[:-1]
+                        if len(self.text.strip()) == 0:
+                            self.value = float("nan")
+                        else:
+                            self.value = float(self.text)
                 self.change_text(self.text)
-            if len(self.text.strip()) == 0:
-                self.value = float("nan")
-                x, y = self.get_pos()
-                if self.indicator is not None:
-                    self.indicator.show()
-                    self.indicator.set_pos(x, y + 50)
-            else:
-                if self.indicator is not None:
-                    self.indicator.hide()
+                if len(self.text.strip()) == 0:
+                    if self.indicator is not None:
+                        self.indicator.change_text("Unlabeled")
+                        self.indicator.show()
+                        self.indicator.set_pos(x, y + 50)
+                else:
+                    if self.lower_bound > self.value:
+                        self.value = self.lower_bound
+                        if self.indicator is not None:
+                            self.indicator.show()
+                            self.indicator.change_text("Too small!")
+                            self.indicator.set_pos(x, y + 50)
+                    elif self.value > self.upper_bound:
+                        self.value = self.upper_bound
+                        if self.indicator is not None:
+                            self.indicator.show()
+                            self.indicator.change_text("Too big!")
+                            self.indicator.set_pos(x, y + 50)
+                    else:
+                        if self.indicator is not None:
+                            self.indicator.hide()
 
     def validate_input(self, text):
         try:
