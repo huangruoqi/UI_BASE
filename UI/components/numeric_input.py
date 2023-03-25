@@ -22,11 +22,14 @@ class NumericInput(Button):
         self.bar = Text("|", fontsize, "CENTER", color)
         self.negative_sign = Text("-", fontsize, "CENTER", color)
         self.indicator = None
+        if use_indicator:
+            self.indicator = Text("Unlabeled", fontsize * 2 // 3, "CENTER", (0, 0, 0))
         self.base_x, self.base_y = 0, 0
         self.font_size = fontsize
         self.font_width = fontsize * 0.546  # anonymous pro
         self.max_charactor = max_character
         self.max_width = width
+        self.use_indicator = use_indicator
         super().__init__(
             image_file=image_file,
             animation="none",
@@ -44,16 +47,14 @@ class NumericInput(Button):
         ] = self.text_display
         self.inner_components[f"inner_{NumericInput.object_count}_bar"] = self.bar
         self.inner_components[f"inner_{NumericInput.object_count}_neg"] = self.negative_sign
+        if use_indicator:
+            self.inner_components[
+                f"inner_{NumericInput.object_count}_indicator"
+            ] = self.indicator
         NumericInput.object_count += 1
         self.blink_wait_time = 0
         self.editing = False
         self.cursor_hidden = True
-        self.use_indicator = use_indicator
-        if use_indicator:
-            self.indicator = Text("Unlabeled", fontsize * 2 // 3, "CENTER", (0, 0, 0))
-            self.inner_components[
-                f"inner_{NumericInput.object_count}_indicator"
-            ] = self.indicator
         self.bar.hide()
         self.change_text(self.text)
 
@@ -87,7 +88,6 @@ class NumericInput(Button):
                 self.cursor_hidden = not self.cursor_hidden
                 self.blink_wait_time = 0
             x, y = self.get_pos()
-            abs_value = None
             if keyboard_inputs:
                 for c in keyboard_inputs:
                     if c == "-":
@@ -97,9 +97,9 @@ class NumericInput(Button):
                         if len(self.text) < self.max_charactor:
                             if self.validate_input(self.text + c):
                                 self.text += c
-                                self.value = float(self.text)
-                                if self.negative:
-                                    self.value = - self.value
+                        self.value = float(self.text)
+                        if self.negative:
+                            self.value = - self.value
                     else:
                         if len(self.text.strip()) == 0:
                             if self.negative:
@@ -114,25 +114,22 @@ class NumericInput(Button):
                                 self.value = - self.value
                 self.change_text(self.text)
                 if len(self.text.strip()) == 0:
-                    if self.indicator is not None:
+                    if self.use_indicator:
                         self.indicator.change_text("Unlabeled")
                         self.indicator.show()
-                        self.indicator.set_pos(x+self.max_width/2, y+self.font_size*2)
                 else:
                     if self.lower_bound > self.value:
                         self.value = self.lower_bound
-                        if self.indicator is not None:
+                        if self.use_indicator:
                             self.indicator.show()
                             self.indicator.change_text(f"Min:{str(self.value)[:self.max_charactor]}")
-                            self.indicator.set_pos(x+self.max_width/2, y+self.font_size*2)
                     elif self.value > self.upper_bound:
                         self.value = self.upper_bound
-                        if self.indicator is not None:
+                        if self.use_indicator:
                             self.indicator.show()
                             self.indicator.change_text(f"Max:{str(self.value)[:self.max_charactor]}")
-                            self.indicator.set_pos(x+self.max_width/2, y+self.font_size*2)
                     else:
-                        if self.indicator is not None:
+                        if self.use_indicator:
                             self.indicator.hide()
             if self.negative:
                 self.negative_sign.show()
@@ -173,6 +170,8 @@ class NumericInput(Button):
         self.negative_sign.set_pos(
             self.base_x - self.font_width//2, self.base_y - (self.font_size + 2) // 16
         )
+        if self.use_indicator:
+            self.indicator.set_pos(x+self.max_width/2, y+self.font_size*2)
 
     def show(self):
         super().show()
@@ -181,5 +180,5 @@ class NumericInput(Button):
             self.negative_sign.show()
         else:
             self.negative_sign.hide()
-        if self.indicator is not None:
+        if self.use_indicator:
             self.indicator.hide()
