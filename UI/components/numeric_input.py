@@ -46,7 +46,9 @@ class NumericInput(Button):
             f"inner_{NumericInput.object_count}_text"
         ] = self.text_display
         self.inner_components[f"inner_{NumericInput.object_count}_bar"] = self.bar
-        self.inner_components[f"inner_{NumericInput.object_count}_neg"] = self.negative_sign
+        self.inner_components[
+            f"inner_{NumericInput.object_count}_neg"
+        ] = self.negative_sign
         if use_indicator:
             self.inner_components[
                 f"inner_{NumericInput.object_count}_indicator"
@@ -97,10 +99,10 @@ class NumericInput(Button):
                         if len(self.text) < self.max_charactor:
                             if self.validate_input(self.text + c):
                                 self.text += c
-                        if len(self.text)!=0:
+                        if len(self.text) != 0:
                             self.value = float(self.text)
                         if self.negative:
-                            self.value = - self.value
+                            self.value = -self.value
                     else:
                         if len(self.text.strip()) == 0:
                             if self.negative:
@@ -112,7 +114,7 @@ class NumericInput(Button):
                         else:
                             self.value = float(self.text)
                             if self.negative:
-                                self.value = - self.value
+                                self.value = -self.value
                 self.change_text(self.text)
                 if len(self.text.strip()) == 0:
                     if self.use_indicator:
@@ -123,12 +125,16 @@ class NumericInput(Button):
                         self.value = self.lower_bound
                         if self.use_indicator:
                             self.indicator.show()
-                            self.indicator.change_text(f"Min:{str(self.value)[:self.max_charactor]}")
+                            self.indicator.change_text(
+                                f"Min:{str(self.value)[:self.max_charactor]}"
+                            )
                     elif self.value > self.upper_bound:
                         self.value = self.upper_bound
                         if self.use_indicator:
                             self.indicator.show()
-                            self.indicator.change_text(f"Max:{str(self.value)[:self.max_charactor]}")
+                            self.indicator.change_text(
+                                f"Max:{str(self.value)[:self.max_charactor]}"
+                            )
                     else:
                         if self.use_indicator:
                             self.indicator.hide()
@@ -157,22 +163,24 @@ class NumericInput(Button):
             self.negative_sign.show()
         else:
             self.negative_sign.hide()
-        self.text = str(abs(self.value))[:self.max_charactor]
+        self.text = str(abs(self.value))[: self.max_charactor]
         self.change_text(self.text)
-    
 
     def set_pos(self, x, y=None):
         super().set_pos(x, y)
         self.text_display.set_pos(x + 10 + self.font_width, y)
-        self.base_x, self.base_y = x + 10 + self.font_width, y + (self.font_size + 2) // 2
+        self.base_x, self.base_y = (
+            x + 10 + self.font_width,
+            y + (self.font_size + 2) // 2,
+        )
         self.bar.set_pos(
             self.base_x + self.text_display.rect.w + self.font_width / 5, self.base_y
         )
         self.negative_sign.set_pos(
-            self.base_x - self.font_width//2, self.base_y - (self.font_size + 2) // 16
+            self.base_x - self.font_width // 2, self.base_y - (self.font_size + 2) // 16
         )
         if self.use_indicator:
-            self.indicator.set_pos(x+self.max_width/2, y+self.font_size*2)
+            self.indicator.set_pos(x + self.max_width / 2, y + self.font_size * 2)
 
     def show(self):
         super().show()
