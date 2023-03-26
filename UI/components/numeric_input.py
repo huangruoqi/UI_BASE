@@ -97,7 +97,8 @@ class NumericInput(Button):
                         if len(self.text) < self.max_charactor:
                             if self.validate_input(self.text + c):
                                 self.text += c
-                        self.value = float(self.text)
+                        if len(self.text)!=0:
+                            self.value = float(self.text)
                         if self.negative:
                             self.value = - self.value
                     else:
