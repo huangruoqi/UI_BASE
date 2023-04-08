@@ -43,7 +43,7 @@ class Scene:
             self.GROUPS[i].draw(self.screen)
         # Mouse.draw(self.screen, mouse_pos, self.is_pointer)
 
-    def update(self, delta_time, mouse_pos, keyboard_inputs, clicked, pressed):
+    def update(self, delta_time, mouse_pos, keyboard_inputs, clicked, mouse_pressed, keyboard_pressed):
         self.started = True
         btns = self.BUTTONS.values()
         self.is_pointer = False
@@ -58,7 +58,7 @@ class Scene:
                     mouse_pos,
                     keyboard_inputs,
                     clicked,
-                    pressed,
+                    mouse_pressed,
                     screen_clicked,
                 )
                 if isinstance(item, Button):

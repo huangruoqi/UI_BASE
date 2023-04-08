@@ -30,9 +30,10 @@ class App:
         mouse_pos,
         keyboard_inputs,
         clicked,
-        pressed,
+        mouse_pressed,
+        keyboard_pressed
     ):
-        self.scene.update(delta_time, mouse_pos, keyboard_inputs, clicked, pressed)
+        self.scene.update(delta_time, mouse_pos, keyboard_inputs, clicked, mouse_pressed, keyboard_pressed)
 
     def change_scene(self, scene_index, func=lambda s: 0):
         self.prev_scene_index = self.curr_scene_index
@@ -45,7 +46,8 @@ class App:
         clock = pygame.time.Clock()
         clicked = False
         mouse_pos = vec(0, 0)
-        pressing = False
+        mouse_pressing = False
+        keyboard_pressed = {}
         delta_time = 0.016
         running = True
         keyboard_inputs = []
@@ -59,22 +61,27 @@ class App:
                 if event.type == pygame.QUIT:
                     running = False
                 if event.type == pygame.MOUSEBUTTONUP:
-                    if pressing:
+                    if mouse_pressing:
                         clicked = event.button
-                        pressing = False
+                        mouse_pressing = False
                         # development purpose
                         if clicked == 1:
                             pass
                             # print(str(mouse_pos) + " is clicked!")
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    pressing = True
+                    mouse_pressing = True
                 if event.type == pygame.TEXTINPUT:
                     keyboard_inputs.append(event.text)
                 if event.type == pygame.KEYDOWN:
                     if event.unicode == "\b":
                         keyboard_inputs.append("\b")
+                    keyboard_pressed[event.unicode] = True
+                if event.type == pygame.KEYUP:
+                    if event.unicode == "\b":
+                        keyboard_inputs.append("\b")
+                    keyboard_pressed[event.unicode] = False
 
-            self.update(delta_time, mouse_pos, keyboard_inputs, clicked, pressing)
+            self.update(delta_time, mouse_pos, keyboard_inputs, clicked, mouse_pressing, keyboard_pressed)
             if self.next_scene is not None:
                 self.scene = self.next_scene
                 self.next_scene_callback(self.scene)
