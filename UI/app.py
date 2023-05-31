@@ -77,8 +77,6 @@ class App:
                         keyboard_inputs.append("\b")
                     keyboard_pressed[event.unicode] = True
                 if event.type == pygame.KEYUP:
-                    if event.unicode == "\b":
-                        keyboard_inputs.append("\b")
                     keyboard_pressed[event.unicode] = False
 
             self.update(delta_time, mouse_pos, keyboard_inputs, clicked, mouse_pressing, keyboard_pressed)
